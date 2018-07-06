@@ -12,17 +12,23 @@
 						<h3>글쓰기</h3>
 						<hr>
 							<form action="New.jsp" method="POST">
-								<label for="titlearea" class="input-label">title</label>
-								 <input name="title" class="form-control form-control-sm" id="titlearea" type="text">
-								  <br> <br> 
-								  <label for="contentarea" class="input-label">content</label>
-								<textarea name="content" class="form-control" id="contentarea tippost_content" rows="7"></textarea>
+								<label for="titlearea" class="input-label">웹툰 제목 </label>
+								 <input name="webtoonName" id="titlearea" type="text">
+								  <label for="contentarea" class="input-label">웹툰 줄거리 </label>
+								<textarea name="webtoonSummary" id="contentarea tippost_content" rows="7"></textarea>
+								
+								<label for="titlearea" class="input-label">작가</label>
+								<textarea name="webtoonWriter" id="contentarea tippost_content" rows="7"></textarea>
+								
+								<label for="titlearea" class="input-label">주소 </label>
+								<textarea name="url" id="contentarea tippost_content" rows="7"></textarea>
+								
 								<br>
 								<hr>
 						<hr>
 						<button type="submit" class="btn btn-secondary btn-sm" style="float: right;">등록</button>
 						</form>
-						<form action=boardList.jsp method="GET">
+						<form action=List.jsp method="GET">
 							<button type="submit" class="btn btn-secondary btn-sm" style="float: left;">list</button>
 						</form>
 			
