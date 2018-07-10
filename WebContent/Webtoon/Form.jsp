@@ -11,9 +11,12 @@
 			
 						<h3>글쓰기</h3>
 						<hr>
-							<form action="New.jsp" method="POST">
+							<form action="New.jsp" method="POST" enctype-"multipart/form-data">
 								<label for="titlearea" class="input-label">웹툰 제목 </label>
 								 <input name="webtoonName" id="titlearea" type="text">
+								 <label for="titlearea" class="input-label">이미지 </label>
+								 <input type="file" name="image">
+								 
 								  <label for="contentarea" class="input-label">웹툰 줄거리 </label>
 								<textarea name="webtoonSummary" id="contentarea tippost_content" rows="7"></textarea>
 								
