@@ -1,94 +1,71 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*"%>
+<%@page import="webtoon.WebtoonManager"%>
+<%@page import="webtoon.WebtoonDTO"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" errorPage="../DBError.jsp"%>
+<%@page import="java.sql.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%
+
+Class.forName("com.mysql.jdbc.Driver");
+request.setCharacterEncoding("euc-kr");
+	List<WebtoonDTO> list = WebtoonManager.webtoonAllData();
+    request.setAttribute("list", list);
+
+    Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/toonight", "root", "1234");
+
+	String command = String.format("insert into web(webTitle,webPoster)values(?,?)");
+	PreparedStatement pstmt = conn.prepareStatement(command);
+    
+    WebtoonDTO vo=list.get(0);
+    for(int i=0; i<list.size(); i++){
+    	vo =list.get(i);  
+    	   String webTitle=vo.getTitle();
+    		String webPoster=vo.getPoster();
+    	
+    		String sql= String.format("create table if not exists web(webID integer not null auto_increment,webTitle varchar(20),webPoster blob, primary key(webID))" );
+    		Statement stmt=conn.createStatement();
+    		stmt.executeUpdate(sql);
+    		
+    		pstmt.setString(1,webTitle);
+    		pstmt.setString(2, webPoster);
+    		
+    		
+
+
+    		pstmt.execute();
+    	
+      //System.out.println(vo.toString());
+	}
+ 
+	pstmt.close();
+	conn.close();
+
+
+%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="../style1.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-<title>ê²Œì‹œíŒ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>À¥Å÷</title>
 </head>
 <body>
-	<div id="wrapper">
-		<div id="box">
-			
-			<div id="content">
-				<h2>ê²Œì‹œíŒ</h2>
-				<%
-					int total = 0;
-					Connection conn = null;
-					Statement stmt = null;
-					try {
-						Class.forName("com.mysql.jdbc.Driver");
-						conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/toonight", "root", "1234");
-						if (conn == null)
-							throw new Exception("ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
-						stmt = conn.createStatement();
-						ResultSet rs = stmt.executeQuery("select count(*) from webtoon;");
-						if (rs.next())
-							total = rs.getInt(1);
-						rs.close();
-						out.print("ì´ ê²Œì‹œë¬¼:" + total + "ê°œ");
-						rs = stmt.executeQuery("select webtoonID, writer, webtoonWriter, webtoonName from webtoon");
-				%>
-				<table width="100%" cellpadding="0" cellspacing="0" border="0">
-					<tr height="1" bgcolor="#82B5DF">
-						<td colspan="6" width="752"></td>
-					</tr>
-					<tr height="5">
-						<td width="5"></td>
-					</tr>
-					<tr height="5" align="center">
-						<td>&nbsp;</td>
-						<td width="73">ë²ˆí˜¸</td>
-						<td width="379" align="left">ì œëª©</td>
-						<td width="73" align="center">ì‘ì„±ì</td>
-						<td width="73">ì¡°íšŒìˆ˜</td>
-					</tr>
-					<tr height="1" bgcolor="#82B5DF">
-						<td colspan="6" width="752"></td>
-					</tr>
-					<%
-						if (total == 0) {
-					%>
-					<tr align="center" bgcolor="#FFFFFF" height="30">
-						<td colspan="6">ë“±ë¡ëœ ê¸€ì´ ì—†ìŠµë‹ˆë‹¤.</td>
-					</tr>
-					<%
-						} else {
-
-								while (rs.next()) {
-									int webtoonID = rs.getInt(1);
-									String writer = rs.getString(2);
-									String webtoonName = rs.getString(4);
-					%>
-					<tr height="25" align="center">
-						<td>&nbsp;</td>
-						<td><%=webtoonID%></td>
-						<td align="left"><a href="View.jsp?webtoonID=<%=webtoonID%>"><%=webtoonName%></a></td>
-						<td align="center"><%=writer%></td>
-						<td>&nbsp;</td>
-					</tr>
-					<tr height="1" bgcolor="#D2D2D2">
-						<td colspan="6"></td>
-					</tr>
-					<%
-						}
-							}
-							rs.close();
-							stmt.close();
-							conn.close();
-						} catch (SQLException e) {
-							out.println(e.toString());
-						}
-					%>
-					<tr height="1" bgcolor="#82B5DF">
-						<td colspan="6" width="752"></td>
-					</tr>
-				</table>
-				<form action=Form.jsp METHOD=POST style="margin: 10px">
-					<button type="submit" class="btn btn-outline-dark">ê¸€ì“°ê¸°</button>
-				</form>
-			</div>
-		</div>
-	</div>
+	<h3>À¥Å÷ ¸ñ·Ï</h3>
+	<p>³×ÀÌ¹ö À¥Å÷</p>
+	<ul class = "naver_webtoon">
+		<c:forEach var="vo" items="${list }">    <!-- listÀÇ µ¥ÀÌÅÍ°¡ ¼ø¼­´ë·Î ÀÓ½Ãº¯¼ö 'vo'¿¡ ´ëÀÔ -->
+        	<li class="li_Webtoon">
+        		<a href="Detail.jsp?number=${vo.number }"> <!-- ÇØ´çÇÏ´Â number À¥Å÷ÀÇ detail.jsp·Î ÀÌµ¿ -->             
+        		<!-- Á¦¸ñ°ú ½æ³×ÀÏ --> 
+            	 ${vo.title }	
+            	<img src="${vo.poster }" width="100" height="100" border="0">
+            	</a>
+            </li>            
+        </c:forEach>
+     </ul>
+     
+     <p>´ÙÀ½ À¥Å÷</p>
+	
 </body>
 </html>
