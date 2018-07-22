@@ -8,11 +8,11 @@
 %>
 <%
 	Class.forName("com.mysql.jdbc.Driver");
-	String content = request.getParameter("input_comment");
 	String userID = (String) session.getAttribute("userID");
 	String id = getCookieValue(cookies, "webtoonID");
 	int webtoonID = Integer.parseInt(id);
-
+System.out.println(webtoonID);
+System.out.println(userID);
 	if (userID == null) {
 %>
 <script language=javascript>
@@ -26,11 +26,11 @@ location.href="../User/Login.jsp?";
 
 			Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/toonight", "root",
 					"1234");
-			String command = String.format("insert into comment(userID,webtoonID,content)values(?,?,?)");
+			String command = String.format("insert into wishlist( userID, webtoonID ) values(?,?)");
 			PreparedStatement pstmt = conn.prepareStatement(command);
-			pstmt.setString(1, userID);
+			int uid=Integer.parseInt(userID);
+			pstmt.setInt(1, uid);
 			pstmt.setInt(2, webtoonID);
-			pstmt.setString(3, content);
 
 			pstmt.execute();
 			pstmt.close();
@@ -54,6 +54,6 @@ location.href="../User/Login.jsp?";
 		return null;
 	}%>
 <script language=javascript>
- self.window.alert(" 댓글이 등록되었습니다 .");
+ self.window.alert(" 좋아합니다 .");
  location.href="Detail.jsp?number=<%=webtoonID%>";
  </script>

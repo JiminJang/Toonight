@@ -37,7 +37,7 @@
 										throw new Exception("데이터베이스에 연결할 수 없습니다.");
 									stmt = conn.createStatement();
 									ResultSet rs = stmt
-											.executeQuery("select count(*)from webtoon where webtoonName like '%" + search + "%'");
+											.executeQuery("select count(*) from web where webTitle like '%" + search + "%'");
 									while (rs.next()) {
 										count = rs.getInt(1);
 									}
@@ -50,18 +50,18 @@
  </script>
 							<%
 								} else {
-										rs = stmt.executeQuery("select webtoonID, webtoonName from webtoon where webtoonName like '%"
+										rs = stmt.executeQuery("select webID, webTitle from web where webTitle like '%"
 												+ search + "%'");
 
 										while (rs.next()) {
 
-											int webtoonID = rs.getInt(1);
-											String webtoonName = rs.getString(2);
+											int webID = rs.getInt(1);
+											String webTitle = rs.getString(2);
+											
 							%>
 							<div class="card" style="margin-right: 20px; margin-top: 9px; border: none; border-bottom: solid 1px; border-color: #D3D3D3;">
-									<p class="card-text"><%=webtoonID%></p>
-									<a href= "View.jsp?webtoonID=<%=webtoonID%>"><p class="card-text"><%=webtoonName%>
-									</p></a>
+									<p class="card-text"><%=webID%></p>
+									<p class="card-text"><%=webTitle%></p>
 							</div>
 							</a>
 							<%

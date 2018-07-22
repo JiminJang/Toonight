@@ -14,7 +14,7 @@ request.setCharacterEncoding("euc-kr");
 
     Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/toonight", "root", "1234");
 
-	String command = String.format("insert into web(webTitle,webPoster)values(?,?)");
+	String command = String.format("insert into webtoon(webtoonTitle,webtoonPoster)select ?,? where not exists(select * from webtoon where webtoonTitle=?);");
 	PreparedStatement pstmt = conn.prepareStatement(command);
     
     WebtoonDTO vo=list.get(0);
@@ -23,13 +23,13 @@ request.setCharacterEncoding("euc-kr");
     	   String webTitle=vo.getTitle();
     		String webPoster=vo.getPoster();
     	
-    		String sql= String.format("create table if not exists web(webID integer not null auto_increment,webTitle varchar(20),webPoster blob, primary key(webID))" );
+    		String sql= String.format("create table if not exists webtoon(webtoonID integer not null auto_increment,webtoonTitle varchar(20),webtoonPoster blob, webtoonGrade integer, webtoonFeels varchar (20), primary key(webtoonID))" );
     		Statement stmt=conn.createStatement();
     		stmt.executeUpdate(sql);
     		
     		pstmt.setString(1,webTitle);
     		pstmt.setString(2, webPoster);
-    		
+    		pstmt.setString(3,webTitle);
     		
 
 

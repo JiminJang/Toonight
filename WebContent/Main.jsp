@@ -46,7 +46,7 @@
             </div>
             <!-- °Ë»öÃ¢ -->
             <div style="text-align:center; margin-top:4%;">
-               <form class="search" action="Webtoon/Search.jsp">
+               <form class="search" action="Webtoon/Search.jsp" method="POST">
                   <input type="text" name="search" id="search" style="">
                   <button type="submit" class="btn btn-secondary btn-sm" style="size: 40%;">search</button>
                </form>   
