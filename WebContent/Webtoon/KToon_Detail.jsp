@@ -7,7 +7,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
     String number = request.getParameter("number");
-	WebtoonDTO vo = WebtoonManager.webtoonDetail(Integer.parseInt(number));
+	WebtoonDTO vo = WebtoonManager.KToon_webtoonDetail(Integer.parseInt(number));
     
     System.out.println("number");
     request.setAttribute("vo", vo);
@@ -20,14 +20,15 @@
 	try {
 		Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/toonight", "root", "1234");
 		Statement stmt = conn.createStatement();
-		
-		
-		String sql3="select webtoonTitle, webtoonPoster from webtoon where webtoonID="+webtoonID;
-		ResultSet result=stmt.executeQuery(sql3);
+		String sql="select webtoonTitle, webtoonPoster from webtoon where webtoonID="+webtoonID;
+		ResultSet result=stmt.executeQuery(sql);
 		while(result.next()){
 			String title=result.getString(1);
 			String poster=result.getString(2);
 		
+		
+		
+
 	
 			
 
@@ -35,7 +36,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title><%=title %> 상세정보</title>
+<title><%=title %>상세정보</title>
 </head>
 <body>
 
@@ -85,8 +86,8 @@
 	</form>
 	<hr>
 	<%
-					String sql = "select commentID, userID, content from comment where webtoonID=" + webtoonID;
-						ResultSet rs = stmt.executeQuery(sql);
+					String sql4 = "select commentID, userID, content from comment where webtoonID=" + webtoonID;
+						ResultSet rs = stmt.executeQuery(sql4);
 						while (rs.next()) {
 							int commentID = rs.getInt(1);
 							String userID = rs.getString(2);

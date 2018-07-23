@@ -9,7 +9,7 @@
 
 Class.forName("com.mysql.jdbc.Driver");
 request.setCharacterEncoding("euc-kr");
-	List<WebtoonDTO> list = WebtoonManager.webtoonAllData();
+	List<WebtoonDTO> list = WebtoonManager.webtoonNaverData();
     request.setAttribute("list", list);
 
     Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/toonight", "root", "1234");
@@ -44,28 +44,17 @@ request.setCharacterEncoding("euc-kr");
 
 %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>웹툰</title>
 </head>
 <body>
-	<h3>웹툰 목록</h3>
-	<p>네이버 웹툰</p>
-	<ul class = "naver_webtoon">
-		<c:forEach var="vo" items="${list }">    <!-- list의 데이터가 순서대로 임시변수 'vo'에 대입 -->
-        	<li class="li_Webtoon">
-        		<a href="Detail.jsp?number=${vo.number }"> <!-- 해당하는 number 웹툰의 detail.jsp로 이동 -->             
-        		<!-- 제목과 썸네일 --> 
-            	 ${vo.title }	
-            	<img src="${vo.poster }" width="100" height="100" border="0">
-            	</a>
-            </li>            
-        </c:forEach>
-     </ul>
-     
-     <p>다음 웹툰</p>
-	
+   <h3>웹툰 목록</h3>
+   <a href = "Naver_Webtoon.jsp"><p>네이버 웹툰</p></a>
+   <a href = "Daum_Webtoon.jsp"><p>다음 웹툰</p></a>
+   <a href = "Lezhin_Webtoon.jsp"><p>레진 웹툰</p></a>
+   <a href = "KToon_Webtoon.jsp"><p>케이툰 웹툰</p></a>
+
 </body>
 </html>
