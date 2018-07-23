@@ -11,6 +11,15 @@ Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/tooni
     
 
 String userID = (String) session.getAttribute("userID");
+String sql2 = "select name,userImage from user where userID="+userID;
+
+
+Statement stmt = conn.createStatement();
+ResultSet rs2 = stmt.executeQuery(sql2);
+while(rs2.next()){
+	String name=rs2.getString(1);
+	Blob image=rs2.getBlob(2);
+
 
 
 %>
@@ -31,15 +40,15 @@ String userID = (String) session.getAttribute("userID");
 	</div>
 	<br>
 	<div id = "content">
+	<p><img src="../UserPic?userID=<%=userID%>" height="100" width="100"></p>
 		<div id = "profile">
-		<p>name</p>
+		<p><%=name %>님의 마이페이지</p>
 		</div>
 		<div id = "like_list">
 		<P>좋아요 리스트</P>
 		<%
+}
 
-
-		Statement stmt = conn.createStatement();
 
 	String sql = "select webtoon.webtoonID, webtoonTitle, webtoonPoster from (wishlist join user on wishlist.userID=user.userID) join webtoon on (wishlist.webtoonID=webtoon.webtoonID) where user.userID= " + userID;
 	ResultSet rs = stmt.executeQuery(sql);

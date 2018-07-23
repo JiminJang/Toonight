@@ -56,6 +56,7 @@ public class Pic extends HttpServlet {
 		try{
 		Class.forName(jdbc_driver);
 		conn = DriverManager.getConnection(db_url,"root","1234");
+		
 		int webtoonID = Integer.parseInt(request.getParameter("webtoonID"));
 		Statement stmt = conn.createStatement();
 		String sql = "SELECT WEBTOONIMAGE FROM webtoon WHERE webtoonID=" + webtoonID;

@@ -39,7 +39,11 @@
 			<div id="login">
 				<H4>회원 정보를 입력하세요</H4>
 				<FORM ID="SignUpForm" ACTION=SignUpProcess.jsp Method=POST>
-					<input style="border:none; border-bottom:1px solid;" type="hidden" id="isCheck" /> 아이디:<INPUT TYPE=TEXT NAME=id id="id" style="border:none; border-bottom:1px solid;" required><input type="button" class="btn btn-secondary btn-sm" value="중복확인" id="checkId" /> <BR> 패스워드:<INPUT TYPE=PASSWORD style="border:none; border-bottom:1px solid;" NAME=password id="password" required><BR> 이름:<INPUT TYPE=TEXT style="border:none; border-bottom:1px solid;" NAME=name id="name" required><INPUT TYPE="SUBMIT" class="btn btn-secondary btn-sm" VALUE='회원가입'> <INPUT TYPE="RESET" class="btn btn-secondary btn-sm" VALUE='취소'>
+					<input style="border:none; border-bottom:1px solid;" type="hidden" id="isCheck" /> 아이디:<INPUT TYPE=TEXT NAME=id id="id" style="border:none; border-bottom:1px solid;" required><input type="button" class="btn btn-secondary btn-sm" value="중복확인" id="checkId" /> <BR> 패스워드:<INPUT TYPE=PASSWORD style="border:none; border-bottom:1px solid;" NAME=password id="password" required><BR> 이름:<INPUT TYPE=TEXT style="border:none; border-bottom:1px solid;" NAME=name id="name" required>
+					<br>
+			<label for="titlearea" class="input-label">이미지 </label>
+			<input type="file" name="image" placeholder="image" style="display:block">
+			<INPUT TYPE="SUBMIT" class="btn btn-secondary btn-sm" VALUE='회원가입'> <INPUT TYPE="RESET" class="btn btn-secondary btn-sm" VALUE='취소'>
 				</FORM>
 				</div>
 			</div>

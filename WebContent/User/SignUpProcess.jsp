@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR" errorPage="../DBError.jsp"%>
 <%@page import="java.sql.*"%>
+
+<%@ page import="java.io.*" %>
 <%
 	String name = request.getParameter("name");
 	String id = request.getParameter("id");
 	String password = request.getParameter("password");
-	String phoneNum = request.getParameter("phoneNum");
-	String address = request.getParameter("address");
+	String image= request.getParameter("image");
 
 	Connection conn = null;
 	Statement stmt = null;
@@ -19,13 +20,24 @@
 			throw new Exception("데이터베이스에 연결할 수 없습니다.");
 
 		stmt = conn.createStatement();
-		String command = String.format(
-				"insert into user(name, userID, password) values ( '%s', '%s','%s');",
-				name, id, password);
-		int rowNum = stmt.executeUpdate(command);
+		
+		
+		File imgfile= new File(image);
+		FileInputStream fin=new FileInputStream(imgfile);
 
-		if (rowNum < 1)
-			throw new Exception("데이터를 DB에 입력할 수 없습니다.");
+		String command = String.format("insert into user(name,userID,password,userImage)values(?,?,?,?)");
+		PreparedStatement pstmt = conn.prepareStatement(command);
+		pstmt.setString(1,name);
+		pstmt.setString(2, id);
+		pstmt.setString(3, password);
+		pstmt.setBinaryStream(4,fin,(int)imgfile.length());
+		
+		
+	
+
+		pstmt.execute();
+		pstmt.close();
+		conn.close();
 	} finally {
 		try {
 			stmt.close();
