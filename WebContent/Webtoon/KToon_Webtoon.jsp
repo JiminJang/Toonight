@@ -17,32 +17,29 @@ request.setCharacterEncoding("euc-kr");
 	String command = String.format("insert into webtoon(webtoonTitle,webtoonPoster)select ?,? where not exists(select * from webtoon where webtoonTitle=?);");
 	PreparedStatement pstmt = conn.prepareStatement(command);
     
-    WebtoonDTO vo=list.get(0);
+    WebtoonDTO vo1=list.get(0);
+    
+    Statement stmt=conn.createStatement();
     for(int i=0; i<list.size(); i++){
-    	vo =list.get(i);  
-    	   String webTitle=vo.getTitle();
-    		String webPoster=vo.getPoster();
+    	vo1 =list.get(i);  
+    	   String webTitle=vo1.getTitle();
+    		String webPoster=vo1.getPoster();
     	
     		String sql= String.format("create table if not exists webtoon(webtoonID integer not null auto_increment,webtoonTitle longtext,webtoonPoster blob, webtoonGrade integer, webtoonFeels varchar (20), primary key(webtoonID))" );
     		
-    		Statement stmt=conn.createStatement();
+    		
     		stmt.executeUpdate(sql);
 
     		pstmt.setString(1,webTitle);
     		pstmt.setString(2, webPoster);
     		pstmt.setString(3,webTitle);
     		pstmt.execute();
-    		
-    		
-    		String sql2="select webtoonID from webtoon where webtoonTitle='"+webTitle+"'";
-
-    	 	ResultSet rs2=stmt.executeQuery(sql2);
-    	 	while(rs2.next()){
-    	 		int webtoonID=rs2.getInt(1);
+    }
 
 
+          	  %>
 
-%>
+              
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -51,31 +48,33 @@ request.setCharacterEncoding("euc-kr");
 </head>
 <body>
    <h3>웹툰 목록</h3>
-   <p>레진 웹툰</p>
    <ul class = "naver_webtoon">
-      <c:forEach var="vo" items="${list }">    <!-- list의 데이터가 순서대로 임시변수 'vo'에 대입 -->
-           <li class="li_Webtoon">
-              <a href="KToon_Detail.jsp?number=<%=webtoonID%>"> <!-- 해당하는 number 웹툰의 detail.jsp로 이동 -->             
-              <!-- 제목과 썸네일 --> 
-                ${vo.title }   
-               <img src="${vo.poster }" width="100" height="100" border="0">
-               </a>
-            </li>            
-        </c:forEach>
+   <%
+   
+       for(int i=0; i<list.size(); i++){
+		
+			WebtoonDTO vo2=list.get(i);
+
+            String sql4="select webtoonID from webtoon where webtoonTitle='"+vo2.getTitle()+"';";
+           
+            ResultSet rs4=stmt.executeQuery(sql4);
+            while (rs4.next()){
+          	  int webtoonID=rs4.getInt(1);
+          	  
+          	  %>
+          	 
+          	  
+              <a href="KToon_Detail.jsp?number=<%=webtoonID%>"><%=vo2.getTitle() %></a><br>
+   
+
      </ul>
      
 </body>
 </html>
 <%
-
-
-
-    	 	}
-    		
-    	
-      //System.out.println(vo.toString());
-	}
- 
+  
+            }}
 	pstmt.close();
 	conn.close();
-	%>
+	
+	%>    

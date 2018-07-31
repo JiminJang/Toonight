@@ -16,7 +16,7 @@ public class WebtoonDTO {
 		this.number = number;
 	}
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 	public void setTitle(String title) {
 		this.title = title;

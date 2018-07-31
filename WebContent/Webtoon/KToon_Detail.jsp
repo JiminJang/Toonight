@@ -9,7 +9,7 @@
     String number = request.getParameter("number");
 	WebtoonDTO vo = WebtoonManager.KToon_webtoonDetail(Integer.parseInt(number));
     
-    System.out.println("number");
+    System.out.println(number);
     request.setAttribute("vo", vo);
     
     Class.forName("com.mysql.jdbc.Driver");
