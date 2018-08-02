@@ -32,6 +32,7 @@
                <%
                   } else {
                %>
+               <li class="nav-item"><a class="nav-link" href="Webtoon/List.jsp">À¥Å÷</a></li>
                <li class="nav-item"><a class="nav-link" href="User/MyPage.jsp">My Page</a></li>
                <li class="nav-item"><a class="nav-link" href="User/Logout.jsp">·Î±×¾Æ¿ô</a></li>
                <%

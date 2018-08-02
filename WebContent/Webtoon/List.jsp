@@ -124,7 +124,7 @@ request.setCharacterEncoding("euc-kr");
 <body>
    <h3>웹툰 목록</h3>
    <a href = "Naver_Webtoon.jsp"><p>네이버 웹툰</p></a>
-   <a href = "KToon_Webtoon.jsp"><p>케이툰 웹툰</p></a>
+   <a href = "KToon_Webtoon.jsp"><p>케이툰</p></a>
    <a href = "Foxtoon_Webtoon.jsp"><p>폭스툰</p></a>
    <a href="Toomics_Webtoon.jsp"><p>투믹스</p></a>
    <a href = "Peanutoon_Webtoon.jsp"><p>피너툰</p></a>

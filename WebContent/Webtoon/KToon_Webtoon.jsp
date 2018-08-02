@@ -42,7 +42,7 @@ WebtoonDTO vo=list2.get(0);
                %>
               
                
-              <a href="KToon_Detail.jsp?number=<%=webtoonID%>"><%=vo.getTitle() %></a><br>
+              <a href="Detail.jsp?number=<%=webtoonID%>"><%=vo.getTitle() %></a><br>
    
 
      </ul>

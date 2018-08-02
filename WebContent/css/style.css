@@ -1,0 +1,26 @@
+@charset "EUC-KR";
+
+/*all*/
+.wrap{
+   margin-right:10%;
+   margin-left:10%;
+}
+a.webtoon_title:link{
+   color:black;
+}
+a.webtoon_title:visited{
+   color:black;
+}
+a.webtoon_title:hover{
+   color:#BCE55C;
+    text-decoration:none;
+}
+
+/*Detail.jsp*/
+.detail_content{
+   margin-right:10%;
+   margin-left:10%;
+}
+
+/*feeling.jsp*/
+ 

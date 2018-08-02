@@ -39,7 +39,7 @@ List<WebtoonDTO> list5=WebtoonManager.webtoonPeanutoonData();
                %>
               
                
-              <a href="Peanutoon_Detail.jsp?number=<%=webtoonID%>"><%=vo2.getTitle() %></a><br>
+              <a href="Detail.jsp?number=<%=webtoonID%>"><%=vo2.getTitle() %></a><br>
    
 
      </ul>

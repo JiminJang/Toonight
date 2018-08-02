@@ -41,7 +41,7 @@ request.setCharacterEncoding("euc-kr");
                %>
               
                
-              <a href="Toomics_Detail.jsp?number=<%=webtoonID%>"><%=vo2.getTitle() %></a><br>
+              <a href="Detail.jsp?number=<%=webtoonID%>"><%=vo2.getTitle() %></a><br>
    
 
      </ul>

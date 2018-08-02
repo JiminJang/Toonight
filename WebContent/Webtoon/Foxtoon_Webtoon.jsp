@@ -38,7 +38,7 @@ request.setCharacterEncoding("euc-kr");
                %>
               
                
-              <a href="Foxtoon_Detail.jsp?number=<%=webtoonID%>"><%=vo2.getTitle() %></a><br>
+              <a href="Detail.jsp?number=<%=webtoonID%>"><%=vo2.getTitle() %></a><br>
    
 
      </ul>
