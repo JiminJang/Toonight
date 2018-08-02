@@ -8,14 +8,15 @@
 <%
 Class.forName("com.mysql.jdbc.Driver");
 request.setCharacterEncoding("euc-kr");
-List<WebtoonDTO> list1 = WebtoonManager.webtoonNaverData();
-   List<WebtoonDTO> list2 = WebtoonManager.webtoonKToonData();
-    request.setAttribute("list2", list2);
+   List<WebtoonDTO> list4 = WebtoonManager.webtoonToomicsData();
+    request.setAttribute("list4", list4);
     Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/toonight", "root", "1234");
+  
     Statement stmt=conn.createStatement();
-    
  
+    
 %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,16 +25,14 @@ List<WebtoonDTO> list1 = WebtoonManager.webtoonNaverData();
 </head>
 <body>
    <h3>À¥Å÷ ¸ñ·Ï</h3>
-   <p>ÄÉÀÌÅ÷</p>
-   <ul class = "webtoon_content">
+   <p>Åõ¹Í½º</p>
+     <ul class = "webtoon_content">
 <%
-
-WebtoonDTO vo=list2.get(0);
-       for(int i=0; i<list2.size(); i++){
-
-           vo=list2.get(i);
+   
+       for(int i=0; i<list4.size(); i++){
       
-            String sql4="select webtoonID from webtoon where webtoonTitle='"+vo.getTitle()+"';";
+         WebtoonDTO vo2=list4.get(i);
+            String sql4="select webtoonID from webtoon where webtoonTitle='"+vo2.getTitle()+"';";
            
             ResultSet rs4=stmt.executeQuery(sql4);
             while (rs4.next()){
@@ -42,7 +41,7 @@ WebtoonDTO vo=list2.get(0);
                %>
               
                
-              <a href="KToon_Detail.jsp?number=<%=webtoonID%>"><%=vo.getTitle() %></a><br>
+              <a href="Toomics_Detail.jsp?number=<%=webtoonID%>"><%=vo2.getTitle() %></a><br>
    
 
      </ul>

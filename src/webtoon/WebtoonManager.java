@@ -12,15 +12,24 @@ import org.jsoup.select.Elements;
 import webtoon.WebtoonDTO;
 
 public class WebtoonManager {
+
+	   List<WebtoonDTO> list1 = WebtoonManager.webtoonNaverData();
+	   List<WebtoonDTO> list2=WebtoonManager.webtoonKToonData();
+	   List<WebtoonDTO> list3=WebtoonManager.webtoonFoxtoonData();
+	   List<WebtoonDTO> list4=WebtoonManager.webtoonToomicsData();
+	   List<WebtoonDTO> list5=WebtoonManager.webtoonPeanutoonData();
+	   
+	   
    
+   //ï¿½ï¿½ï¿½Ì¹ï¿½
     public static List<WebtoonDTO> webtoonNaverData() {
         
         List<WebtoonDTO> list = new ArrayList<WebtoonDTO>();
         
         try {
-            Document naver_doc = Jsoup.connect("https://comic.naver.com/webtoon/weekday.nhn").get();   // À¥Å÷À» °¡Á®¿Ã ÆäÀÌÁö                 
-            Elements naver_title = naver_doc.select("div.list_area div.col div.col_inner ul li a.title");   // À¥Å÷ Á¦¸ñ            
-            Elements naver_poster = naver_doc.select("div.list_area div.col div.col_inner ul li div.thumb img");   // ½æ³×ÀÏ //select("img[src$=.png]")
+            Document naver_doc = Jsoup.connect("https://comic.naver.com/webtoon/weekday.nhn").get();   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                 
+            Elements naver_title = naver_doc.select("div.list_area div.col div.col_inner ul li a.title");   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½            
+            Elements naver_poster = naver_doc.select("div.list_area div.col div.col_inner ul li div.thumb img");   // ï¿½ï¿½ï¿½ï¿½ï¿½ //select("img[src$=.png]")
             Elements naver_url = naver_doc.select("div.list_area div.col div.col_inner ul li a.title");
             
             for (int i = 0; i < naver_title.size(); i++) {
@@ -29,11 +38,11 @@ public class WebtoonManager {
                 
                 Element telem = naver_title.get(i);
                 Element pelem = naver_poster.get(i);               
-                String img = pelem.attr("src");      //    img ÅÂ±×¾È¿¡ ÀÖ´Â ³»¿ëÁß src ¸¸ °¡Á®¿Â´Ù.
+                String img = pelem.attr("src");    
                 Element uelem = naver_url.get(i);
                 String href = uelem.attr("href");                 
-                WebtoonDTO vo = new WebtoonDTO();    //    µ¥ÀÌÅÍ¸¦ ¼öÁý, DTO¸¦ ¼±¾ðÇÑ ÈÄ DTOÀÇ º¯¼öµéÀ» setter¸¦ ÀÌ¿ëÇØ¼­ ÇÏ³ª¾¿ ³Öµµ·Ï ÇÑ´Ù. 
-                vo.setNumber(i + 1);   //    ¹øÈ£ ÁöÁ¤ (1¹øºÎÅÍ ³Öµµ·Ï ÇÑ´Ù.)
+                WebtoonDTO vo = new WebtoonDTO();   
+                vo.setNumber(i + 1);  
                 vo.setPoster(img);
                 vo.setTitle(telem.text());
                 vo.setUrl(href);
@@ -56,100 +65,15 @@ public class WebtoonManager {
           
     }
     
-    
-    
-    public static List<WebtoonDTO> webtoonDaumData() {
-     List<WebtoonDTO> list = new ArrayList<WebtoonDTO>();
-        
-        try {
-            Document daum_doc = Jsoup.connect("http://webtoon.daum.net/").get();   // À¥Å÷À» °¡Á®¿Ã ÆäÀÌÁö                 
-            Elements daum_title = daum_doc.select("div#daumContent div#cmain div.cont_schedule div div.warp_webtoon ul.list_wt li a.link_wt strong.tit_wt");   // À¥Å÷ Á¦¸ñ            
-            Elements daum_poster = daum_doc.select("div#daumContent div#cmain div.cont_schedule div div.warp_webtoon ul.list_wt li a.link_wt img");   // ½æ³×ÀÏ //select("img[src$=.png]")
-            Elements daum_url = daum_doc.select("div#daumContent div#cmain div.cont_schedule div div.warp_webtoon ul.list_wt li a.link_wt");
-            
-            for (int i = 0; i < daum_title.size(); i++) {
-                
-                if(i > daum_title.size()) break;
-                
-                Element telem = daum_title.get(i);
-                Element pelem = daum_poster.get(i);               
-                String img = pelem.attr("src");      //    img ÅÂ±×¾È¿¡ ÀÖ´Â ³»¿ëÁß src ¸¸ °¡Á®¿Â´Ù.
-                Element uelem = daum_url.get(i);
-                String href = uelem.attr("href");                 
-                WebtoonDTO vo = new WebtoonDTO();    //    µ¥ÀÌÅÍ¸¦ ¼öÁý, DTO¸¦ ¼±¾ðÇÑ ÈÄ DTOÀÇ º¯¼öµéÀ» setter¸¦ ÀÌ¿ëÇØ¼­ ÇÏ³ª¾¿ ³Öµµ·Ï ÇÑ´Ù. 
-                vo.setNumber(i + 250);   //    ¹øÈ£ ÁöÁ¤ (1¹øºÎÅÍ ³Öµµ·Ï ÇÑ´Ù.)
-                vo.setPoster(img);
-                vo.setTitle(telem.text());
-                vo.setUrl(href);
-                     
-                list.add(vo);
-                } 
-        }
-            
-           // for(WebtoonDTO m : list) {
-          //     System.out.println(m.toString());
-           //    }
-  
-            
-            catch (IOException e) {
-           // TODO Auto-generated catch block
-           e.printStackTrace();
-           }
-                
-              return list;        
-          
-    }
-    
-    public static List<WebtoonDTO> webtoonLezhinData() {
-        List<WebtoonDTO> list = new ArrayList<WebtoonDTO>();
-           
-           try {
-               Document daum_doc = Jsoup.connect("https://www.lezhin.com/ko/scheduled").get();   // À¥Å÷À» °¡Á®¿Ã ÆäÀÌÁö                 
-               Elements daum_title = daum_doc.select("section#comic-sheduled-list div.wrap div.comic-scheduled-comic div.homelist-wrap ul.tabcontent li a div.homelist-title span");   // À¥Å÷ Á¦¸ñ            
-               Elements daum_poster = daum_doc.select("section#comic-sheduled-list div.wrap div.comic-scheduled-comic div.homelist-wrap ul.tabcontent li a div.homelist-thumb");   // ½æ³×ÀÏ //select("img[src$=.png]")
-               Elements daum_url = daum_doc.select("section#comic-sheduled-list div.wrap div.comic-scheduled-comic div.homelist-wrap ul.tabcontent li a");
-               
-               for (int i = 0; i < daum_title.size(); i++) {
-                   
-                   if(i > daum_title.size()) break;
-                   
-                   Element telem = daum_title.get(i);
-                   Element pelem = daum_poster.get(i);               
-                   String img = pelem.attr("src");      //    img ÅÂ±×¾È¿¡ ÀÖ´Â ³»¿ëÁß src ¸¸ °¡Á®¿Â´Ù.
-                   Element uelem = daum_url.get(i);
-                   String href = uelem.attr("href");                 
-                   WebtoonDTO vo = new WebtoonDTO();    //    µ¥ÀÌÅÍ¸¦ ¼öÁý, DTO¸¦ ¼±¾ðÇÑ ÈÄ DTOÀÇ º¯¼öµéÀ» setter¸¦ ÀÌ¿ëÇØ¼­ ÇÏ³ª¾¿ ³Öµµ·Ï ÇÑ´Ù. 
-                   vo.setNumber(i + 1);   //    ¹øÈ£ ÁöÁ¤ (1¹øºÎÅÍ ³Öµµ·Ï ÇÑ´Ù.)
-                   vo.setPoster(img);
-                   vo.setTitle(telem.text());
-                   vo.setUrl(href);
-                        
-                   list.add(vo);
-                   } 
-           }
-               
-              // for(WebtoonDTO m : list) {
-             //     System.out.println(m.toString());
-              //    }
-     
-               
-               catch (IOException e) {
-              // TODO Auto-generated catch block
-              e.printStackTrace();
-              }
-                   
-                 return list;        
-             
-       }
-    
-            
+   
+
     public static List<WebtoonDTO> webtoonKToonData() {
         List<WebtoonDTO> list = new ArrayList<WebtoonDTO>();
            
            try {
-               Document daum_doc = Jsoup.connect("https://www.myktoon.com/web/webtoon/works_list.kt").get();   // À¥Å÷À» °¡Á®¿Ã ÆäÀÌÁö                 
-               Elements daum_title = daum_doc.select("section.main_list div.week_all article.col div.inner ul.toon_main li.tm7 a.link div.info strong");   // À¥Å÷ Á¦¸ñ            
-               Elements daum_poster = daum_doc.select("section.main_list div.week_all article.col div.inner ul.toon_main li.tm7 a.link div.thumb img");   // ½æ³×ÀÏ //select("img[src$=.png]")
+               Document daum_doc = Jsoup.connect("https://www.myktoon.com/web/webtoon/works_list.kt").get();  
+               Elements daum_title = daum_doc.select("section.main_list div.week_all article.col div.inner ul.toon_main li.tm7 a.link div.info strong");  
+               Elements daum_poster = daum_doc.select("section.main_list div.week_all article.col div.inner ul.toon_main li.tm7 a.link div.thumb img");  
                Elements daum_url = daum_doc.select("section.main_list div.week_all article.col div.inner ul.toon_main li.tm7 a.link");
                
                for (int i = 0; i < daum_title.size(); i++) {
@@ -158,11 +82,11 @@ public class WebtoonManager {
                    
                    Element telem = daum_title.get(i);
                    Element pelem = daum_poster.get(i);               
-                   String img = pelem.attr("src");      //    img ÅÂ±×¾È¿¡ ÀÖ´Â ³»¿ëÁß src ¸¸ °¡Á®¿Â´Ù.
+                   String img = pelem.attr("src");     
                    Element uelem = daum_url.get(i);
                    String href = uelem.attr("href");                 
-                   WebtoonDTO vo = new WebtoonDTO();    //    µ¥ÀÌÅÍ¸¦ ¼öÁý, DTO¸¦ ¼±¾ðÇÑ ÈÄ DTOÀÇ º¯¼öµéÀ» setter¸¦ ÀÌ¿ëÇØ¼­ ÇÏ³ª¾¿ ³Öµµ·Ï ÇÑ´Ù. 
-                   vo.setNumber(i+1);   //    ¹øÈ£ ÁöÁ¤ (1¹øºÎÅÍ ³Öµµ·Ï ÇÑ´Ù.)
+                   WebtoonDTO vo = new WebtoonDTO();   
+                   vo.setNumber(i + 1);   
                    vo.setPoster(img);
                    vo.setTitle(telem.text());
                    vo.setUrl(href);
@@ -186,14 +110,194 @@ public class WebtoonManager {
        }
     
     
+    // Ä«Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public static List<WebtoonDTO> webtoonKakaoData() {
+        List<WebtoonDTO> list = new ArrayList<WebtoonDTO>();
+           
+           try {
+             // Document doc = Jsoup.connect("https://page.kakao.com/main?categoryUid=10&subCategoryUid=1001").get();   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                 
+               //Elements title = doc.select("div.ReactVirtualized__Grid__innerScrollContainer div.listItemBox div.jsx-1190658265 a.jsx-1190658265 div.textWrap span.titleWrap p.text-ellipsis");   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½            
+               //Elements poster = doc.select("div.ReactVirtualized__Grid__innerScrollContainer div.listItemBox div.jsx-1190658265 a.jsx-1190658265 div.thumbnailWrap div.container img");   // ï¿½ï¿½ï¿½ï¿½ï¿½ //select("img[src$=.png]")
+               //Elements url = doc.select("div.ReactVirtualized__Grid__innerScrollContainer div.listItemBox div.jsx-1190658265 a.jsx-1190658265");
+               
+              Document doc = Jsoup.connect("https://page.kakao.com/main?categoryUid=10&subCategoryUid=1000").get();   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                 
+               Elements title = doc.select("div.contents div.listContentBox ul.listItemBox li.listItem a.jsx-81541574 div.textWrap soan.titleWrap p.text-ellipsis");   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½            
+               Elements poster = doc.select("div#root div.contents div.listContentBox ul.listItemBox li.listItem a.jsx-81541574 div.thumbnailWrap div.container img");   // ï¿½ï¿½ï¿½ï¿½ï¿½ //select("img[src$=.png]")
+               Elements url = doc.select("div#root div.contents div.listContentBox ul.listItemBox li.listItem a.jsx-81541574");
+              for (int i = 0; i < title.size(); i++) {
+                   
+                   if(i > title.size()) break;
+                   
+                   Element telem = title.get(i);
+                   Element pelem = poster.get(i);               
+                   String img = pelem.attr("src");      //    img ï¿½Â±×¾È¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ src ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½.
+                   Element uelem = url.get(i);
+                   String href = uelem.attr("href");                 
+                   WebtoonDTO vo = new WebtoonDTO();    //    ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½, DTOï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ DTOï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ setterï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½Ø¼ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½. 
+                   vo.setNumber(i + 1);   //    ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½ (1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.)
+                   vo.setPoster(img);
+                   vo.setTitle(telem.text());
+                   vo.setUrl(href);
+                        
+                   list.add(vo);
+                   } 
+           }
+               
+              // for(WebtoonDTO m : list) {
+             //     System.out.println(m.toString());
+              //    }
+     
+               
+               catch (IOException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+              }
+                   
+                 return list;        
+             
+       }
+
+    
+    //   ï¿½Ç³ï¿½ï¿½ï¿½
+    public static List<WebtoonDTO> webtoonPeanutoonData() {
+        List<WebtoonDTO> list = new ArrayList<WebtoonDTO>();
+           
+           try {
+              Document doc = Jsoup.connect("http://www.peanutoon.com/cmweek.php?menu=all").get();   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                 
+               Elements title = doc.select("div#wrapper div#container div.comics_content_list div#cmweek div.sub_list a div.sub_list_thumb dl dt.ellipsis span.cm_title");   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½            
+               Elements poster = doc.select("div#wrapper div#container div.comics_content_list div#cmweek div.sub_list a div.sub_list_thumb dl dt img");   // ï¿½ï¿½ï¿½ï¿½ï¿½ //select("img[src$=.png]")
+               Elements url = doc.select("div#wrapper div#container div.comics_content_list div#cmweek div.sub_list a");
+               for (int i = 0; i < title.size(); i++) {
+                   
+                   if(i > title.size()) break;
+                   
+                   Element telem = title.get(i);
+                   Element pelem = poster.get(i);               
+                   String img = pelem.attr("src");      //    img ï¿½Â±×¾È¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ src ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½.
+                   Element uelem = url.get(i);
+                   String href = uelem.attr("href");                 
+                   WebtoonDTO vo = new WebtoonDTO();    //    ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½, DTOï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ DTOï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ setterï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½Ø¼ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½. 
+                   vo.setNumber(i + 1000);   //    ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½ (1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.)
+                   vo.setPoster(img);
+                   vo.setTitle(telem.text());
+                   vo.setUrl(href);
+                        
+                   list.add(vo);
+                   } 
+           }
+               
+              // for(WebtoonDTO m : list) {
+             //     System.out.println(m.toString());
+              //    }
+     
+               
+               catch (IOException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+              }
+                   
+                 return list;        
+             
+       }
+    
+    
+    //   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public static List<WebtoonDTO> webtoonFoxtoonData() {
+        List<WebtoonDTO> list = new ArrayList<WebtoonDTO>();
+           
+           try {
+              Document doc = Jsoup.connect("http://www.foxtoon.com/comic").get();   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                 
+               Elements title = doc.select("div#wrap div#comic_schedule_table div.comic_schedule ul.comic_schedule_day li.comic a div.des div.title");   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½            
+               Elements poster = doc.select("div#wrap div#comic_schedule_table div.comic_schedule ul.comic_schedule_day li.comic a div.fox_thumbnail img.total");   // ï¿½ï¿½ï¿½ï¿½ï¿½ 
+               Elements url = doc.select("div#wrap div#comic_schedule_table div.comic_schedule ul.comic_schedule_day li.comic a");
+               for (int i = 0; i < title.size(); i++) {
+                   
+                   if(i > title.size()) break;
+                   
+                   Element telem = title.get(i);
+                   Element pelem = poster.get(i);               
+                   String img = pelem.attr("src");      //    img ï¿½Â±×¾È¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ src ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½.
+                   Element uelem = url.get(i);
+                   String href = uelem.attr("href");                 
+                   WebtoonDTO vo = new WebtoonDTO();    //    ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½, DTOï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ DTOï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ setterï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½Ø¼ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½. 
+                   vo.setNumber(i + 1);   //    ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½ (1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.)
+                   vo.setPoster(img);
+                   vo.setTitle(telem.text());
+                   vo.setUrl(href);
+                        
+                   list.add(vo);
+                   } 
+           }
+               
+              // for(WebtoonDTO m : list) {
+             //     System.out.println(m.toString());
+              //    }
+     
+               
+               catch (IOException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+              }
+                   
+                 return list;        
+             
+       }
+    
+    
+    //   ï¿½ï¿½ï¿½Í½ï¿½
+    public static List<WebtoonDTO> webtoonToomicsData() {
+        List<WebtoonDTO> list = new ArrayList<WebtoonDTO>();
+           
+           try {
+              Document doc = Jsoup.connect("http://www.toomics.com/webtoon/weekly_all").get();   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                 
+               Elements title = doc.select("div#wrapper div#contents div.inner div.weekly-all div ul.body li a div.caption strong.title");   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½            
+               Elements poster = doc.select("div#wrapper div#contents div.inner div.weekly-all div ul.body li a div.thumb img.img-fluid");   // ï¿½ï¿½ï¿½ï¿½ï¿½ 
+               Elements url = doc.select("div#wrapper div#contents div.inner div.weekly-all div ul.body li a");
+               for (int i = 0; i < title.size(); i++) {
+                   
+                   if(i > title.size()) break;
+                   
+                   Element telem = title.get(i);
+                   Element pelem = poster.get(i);               
+                   String img = pelem.attr("src");      //    img ï¿½Â±×¾È¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ src ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½.
+                   Element uelem = url.get(i);
+                   String href = uelem.attr("href");                 
+                   WebtoonDTO vo = new WebtoonDTO();    //    ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½, DTOï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ DTOï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ setterï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½Ø¼ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½. 
+                   vo.setNumber(i + 1);   //    ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½ (1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.)
+                   vo.setPoster(img);
+                   vo.setTitle(telem.text());
+                   vo.setUrl(href);
+                        
+                   list.add(vo);
+                   } 
+           }
+               
+              // for(WebtoonDTO m : list) {
+             //     System.out.println(m.toString());
+              //    }
+     
+               
+               catch (IOException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+              }
+                   
+                 return list;        
+             
+       }
+    
+    
+
     
     /*---------------------------------------------------------------
-     * À¥Å÷ »ó¼¼º¸±â
+     * ï¿½ï¿½ï¿½ï¿½ ï¿½ó¼¼ºï¿½ï¿½ï¿½
      * ---------------------------------------------------------------*/
     
-    //    ÇØ´ç ¹øÈ£¿¡ ´ëÇÑ Á¤º¸¸¦ °¡Á®¿Àµµ·Ï ÇÑ´Ù. 
-    //    ¹øÈ£¸¦ 1¹ø ºÎÅÍ ¼³Á¤Çß±â ‹š¹®¿¡ no=1¿¡ ÇØ´çÇÏ´Â µ¥ÀÌÅÍ´Â 0¹øÁö¿¡ ÀúÀå µÇ¾îÀÖ´Ù. 
-    //    µû¶ó¼­ 1¹ø µ¥ÀÌÅÍ¸¦ Å¬¸¯ ½Ã 0¹øÁö¿¡ ÇØ´çÇÏ´Â µ¥ÀÌÅÍ¸¦ °¡Á®¿Ã ¼ö ÀÖµµ·Ï -1À» ÇÏµµ·Ï ÇÑ´Ù. 
+    //    ï¿½Ø´ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½. 
+    //    ï¿½ï¿½È£ï¿½ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ no=1ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í´ï¿½ 0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½Ö´ï¿½. 
+    //    ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ Å¬ï¿½ï¿½ ï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ -1ï¿½ï¿½ ï¿½Ïµï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½. 
+    
+    //   ï¿½ï¿½ï¿½Ì¹ï¿½
     public static WebtoonDTO webtoonDetail(int no) {
         List<WebtoonDTO> list = webtoonNaverData();
         WebtoonDTO vo = list.get(no-1);
@@ -201,8 +305,37 @@ public class WebtoonManager {
         return vo;
     }
     
+    //   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public static WebtoonDTO KToon_webtoonDetail(int no) {
         List<WebtoonDTO> list = webtoonKToonData();
+        WebtoonDTO vo = list.get(no-1);
+        
+        return vo;
+    }
+    
+    public static WebtoonDTO Kakao_webtoonDetail(int no) {
+        List<WebtoonDTO> list = webtoonKakaoData();
+        WebtoonDTO vo = list.get(no-1);
+        
+        return vo;
+    }
+    
+    public static WebtoonDTO Peanutoon_webtoonDetail(int no) {
+        List<WebtoonDTO> list = webtoonPeanutoonData();
+        WebtoonDTO vo = list.get(no-1);
+        
+        return vo;
+    }
+    
+    public static WebtoonDTO Foxtoon_webtoonDetail(int no) {
+        List<WebtoonDTO> list = webtoonFoxtoonData();
+        WebtoonDTO vo = list.get(no-1);
+        
+        return vo;
+    }
+    
+    public static WebtoonDTO Toomics_webtoonDetail(int no) {
+        List<WebtoonDTO> list = webtoonToomicsData();
         WebtoonDTO vo = list.get(no-1);
         
         return vo;
